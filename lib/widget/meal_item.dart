@@ -4,9 +4,10 @@ import 'package:my_meals/widget/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal});
+  const MealItem({super.key, required this.meal, required this.onSelectMeal});
 
   final Meal meal;
+  final void Function(Meal meal) onSelectMeal;
 
   String get complextyText {
     return meal.complexity.name[0].toUpperCase() +
@@ -26,7 +27,9 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onSelectMeal(meal);
+        },
         child: Stack(
           children: [
             FadeInImage(
@@ -44,19 +47,21 @@ class MealItem extends StatelessWidget {
                 color: Colors.black54,
                 padding: EdgeInsets.symmetric(vertical: 6, horizontal: 44),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          meal.title,
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          overflow: TextOverflow.clip,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleLarge!.copyWith(color: Colors.white),
+                        Expanded(
+                          child: Text(
+                            meal.title,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.titleLarge!
+                                .copyWith(color: Colors.white),
+                          ),
                         ),
                       ],
                     ),
