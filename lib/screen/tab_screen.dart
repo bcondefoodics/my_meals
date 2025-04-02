@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_meals/screen/categories_screen.dart';
 import 'package:my_meals/screen/meals_screen.dart';
+import 'package:my_meals/widget/main_drawer.dart';
 
 import '../model/meal.dart';
 
@@ -55,6 +56,7 @@ class _TabScreenState extends State<TabScreen> {
     }
 
     return Scaffold(
+      drawer: Drawer(child: MainDrawer()),
       appBar: AppBar(title: Text(activePageTitle)),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
