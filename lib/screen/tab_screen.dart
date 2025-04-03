@@ -65,30 +65,34 @@ class _TabScreenState extends State<TabScreen> {
     }
   }
 
+  bool get isGlutenEnabled {
+    return filters.entries.where((filter) {
+      return (filter.key == Filters.gluten && filter.value);
+    }).isNotEmpty;
+  }
+
+  bool get isLactoseEnabled {
+    return filters.entries.where((filter) {
+      return (filter.key == Filters.lactose && filter.value);
+    }).isNotEmpty;
+  }
+
+  bool get isVeganEnabled {
+    return filters.entries.where((filter) {
+      return (filter.key == Filters.vegan && filter.value);
+    }).isNotEmpty;
+  }
+
+  bool get isVegetarianEnabled {
+    return filters.entries.where((filter) {
+      return (filter.key == Filters.vegetarian && filter.value);
+    }).isNotEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Meal> filteredFavoriteMeals =
         _favoriteMeals.where((meal) {
-          bool isGlutenEnabled =
-              filters.entries.where((filter) {
-                return (filter.key == Filters.gluten && filter.value);
-              }).isNotEmpty;
-
-          bool isLactoseEnabled =
-              filters.entries.where((filter) {
-                return (filter.key == Filters.lactose && filter.value);
-              }).isNotEmpty;
-
-          bool isVeganEnabled =
-              filters.entries.where((filter) {
-                return (filter.key == Filters.vegan && filter.value);
-              }).isNotEmpty;
-
-          bool isVegetarianEnabled =
-              filters.entries.where((filter) {
-                return (filter.key == Filters.vegetarian && filter.value);
-              }).isNotEmpty;
-
           if (meal.isGlutenFree && isGlutenEnabled) return true;
           if (meal.isVegetarian && isVegetarianEnabled) return true;
           if (meal.isVegan && isVeganEnabled) return true;

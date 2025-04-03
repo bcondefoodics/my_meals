@@ -17,27 +17,31 @@ class CategoriesScreen extends StatelessWidget {
   final Map<Filters, bool> filters;
   final void Function(Meal) onToggleFavorite;
 
+  bool get isGlutenEnabled {
+    return filters.entries.where((filter) {
+      return (filter.key == Filters.gluten && filter.value);
+    }).isNotEmpty;
+  }
+
+  bool get isLactoseEnabled {
+    return filters.entries.where((filter) {
+      return (filter.key == Filters.lactose && filter.value);
+    }).isNotEmpty;
+  }
+
+  bool get isVeganEnabled {
+    return filters.entries.where((filter) {
+      return (filter.key == Filters.vegan && filter.value);
+    }).isNotEmpty;
+  }
+
+  bool get isVegetarianEnabled {
+    return filters.entries.where((filter) {
+      return (filter.key == Filters.vegetarian && filter.value);
+    }).isNotEmpty;
+  }
+
   void _selectCategory(BuildContext context, Category category) {
-    bool isGlutenEnabled =
-        filters.entries.where((filter) {
-          return (filter.key == Filters.gluten && filter.value);
-        }).isNotEmpty;
-
-    bool isLactoseEnabled =
-        filters.entries.where((filter) {
-          return (filter.key == Filters.lactose && filter.value);
-        }).isNotEmpty;
-
-    bool isVeganEnabled =
-        filters.entries.where((filter) {
-          return (filter.key == Filters.vegan && filter.value);
-        }).isNotEmpty;
-
-    bool isVegetarianEnabled =
-        filters.entries.where((filter) {
-          return (filter.key == Filters.vegetarian && filter.value);
-        }).isNotEmpty;
-
     final List<Meal> filteredMeals =
         dummyMeals.where((meal) {
           bool isContainCategory = meal.categories.contains(category.id);
