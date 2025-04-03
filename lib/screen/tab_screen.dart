@@ -54,11 +54,12 @@ class _TabScreenState extends State<TabScreen> {
   void _setScreen(String identifier) {
     if (identifier == 'filters') {
       Navigator.of(context).pop();
-      Navigator.of(context).push(
+      final result = Navigator.of(context).push(
         MaterialPageRoute(
           builder: (builder) => FiltersScreen(filters: filters),
         ),
       );
+      print(result);
     } else {
       Navigator.of(context).pop();
     }
@@ -66,12 +67,45 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = CategoriesScreen(onToggleFavorite: _toggleFavorite);
+    final List<Meal> filteredFavoriteMeals =
+        _favoriteMeals.where((meal) {
+          bool isGlutenEnabled =
+              filters.entries.where((filter) {
+                return (filter.key == Filters.gluten && filter.value);
+              }).isNotEmpty;
+
+          bool isLactoseEnabled =
+              filters.entries.where((filter) {
+                return (filter.key == Filters.lactose && filter.value);
+              }).isNotEmpty;
+
+          bool isVeganEnabled =
+              filters.entries.where((filter) {
+                return (filter.key == Filters.vegan && filter.value);
+              }).isNotEmpty;
+
+          bool isVegetarianEnabled =
+              filters.entries.where((filter) {
+                return (filter.key == Filters.vegetarian && filter.value);
+              }).isNotEmpty;
+
+          if (meal.isGlutenFree && isGlutenEnabled) return true;
+          if (meal.isVegetarian && isVegetarianEnabled) return true;
+          if (meal.isVegan && isVeganEnabled) return true;
+          if (meal.isLactoseFree && isLactoseEnabled) return true;
+
+          return false;
+        }).toList();
+
+    Widget activePage = CategoriesScreen(
+      onToggleFavorite: _toggleFavorite,
+      filters: filters,
+    );
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
       activePage = MealsScreen(
-        meals: _favoriteMeals,
+        meals: filteredFavoriteMeals,
         onToggleFavorite: _toggleFavorite,
       );
       activePageTitle = 'Favorites';
