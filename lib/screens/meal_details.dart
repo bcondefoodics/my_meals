@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../model/meal.dart';
+import '../models/meal.dart';
 
-class MealDetailScreen extends StatelessWidget {
-  const MealDetailScreen({
+class MealDetailsScreen extends StatelessWidget {
+  const MealDetailsScreen({
     super.key,
     required this.meal,
     required this.onToggleFavorite,
   });
 
   final Meal meal;
-
-  final void Function(Meal) onToggleFavorite;
+  final void Function(Meal meal) onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +22,10 @@ class MealDetailScreen extends StatelessWidget {
             onPressed: () {
               onToggleFavorite(meal);
             },
-            icon: Icon(Icons.favorite),
+            icon: const Icon(Icons.star),
           ),
         ],
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -37,7 +35,7 @@ class MealDetailScreen extends StatelessWidget {
               width: double.infinity,
               fit: BoxFit.cover,
             ),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             Text(
               'Ingredients',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -45,7 +43,7 @@ class MealDetailScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             for (final ingredient in meal.ingredients)
               Text(
                 ingredient,
@@ -53,7 +51,7 @@ class MealDetailScreen extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onBackground,
                 ),
               ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(
               'Steps',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -61,12 +59,12 @@ class MealDetailScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 14),
+            const SizedBox(height: 14),
             for (final step in meal.steps)
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 8,
+                  horizontal: 12,
+                  vertical: 8,
                 ),
                 child: Text(
                   step,

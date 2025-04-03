@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_meals/model/meal.dart';
-import 'package:my_meals/widget/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+import '../widgets/meal_item_trait.dart';
+import '../models/meal.dart';
 
 class MealItem extends StatelessWidget {
   const MealItem({super.key, required this.meal, required this.onSelectMeal});
@@ -9,7 +10,7 @@ class MealItem extends StatelessWidget {
   final Meal meal;
   final void Function(Meal meal) onSelectMeal;
 
-  String get complextyText {
+  String get complexityText {
     return meal.complexity.name[0].toUpperCase() +
         meal.complexity.name.substring(1);
   }
@@ -22,7 +23,7 @@ class MealItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       clipBehavior: Clip.hardEdge,
       elevation: 2,
@@ -33,10 +34,10 @@ class MealItem extends StatelessWidget {
         child: Stack(
           children: [
             FadeInImage(
-              height: 200,
               placeholder: MemoryImage(kTransparentImage),
               image: NetworkImage(meal.imageUrl),
               fit: BoxFit.cover,
+              height: 200,
               width: double.infinity,
             ),
             Positioned(
@@ -45,27 +46,25 @@ class MealItem extends StatelessWidget {
               right: 0,
               child: Container(
                 color: Colors.black54,
-                padding: EdgeInsets.symmetric(vertical: 6, horizontal: 44),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6,
+                  horizontal: 44,
+                ),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            meal.title,
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.titleLarge!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      meal.title,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis, // Very long text ...
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -73,11 +72,11 @@ class MealItem extends StatelessWidget {
                           icon: Icons.schedule,
                           label: '${meal.duration} min',
                         ),
-                        SizedBox(width: 12),
-                        MealItemTrait(icon: Icons.work, label: complextyText),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
+                        MealItemTrait(icon: Icons.work, label: complexityText),
+                        const SizedBox(width: 12),
                         MealItemTrait(
-                          icon: Icons.money,
+                          icon: Icons.attach_money,
                           label: affordabilityText,
                         ),
                       ],
